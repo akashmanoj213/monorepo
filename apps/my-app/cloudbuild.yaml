@@ -1,3 +1,9 @@
 steps:
   - name: docker
     args: ['compose', 'up']
+  - name: 'docker'
+    args: ['tag',
+      'my-app',
+      '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app']
+images:
+  - $LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app
