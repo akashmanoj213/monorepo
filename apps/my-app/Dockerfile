@@ -9,7 +9,7 @@ COPY ../../package*.json ./
 # Install app dependencies
 RUN npm install
 
-# Bundle app source
+# Copy files
 COPY . .
 
 # Creates a "dist" folder with the production build
