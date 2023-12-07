@@ -5,6 +5,9 @@ steps:
     args: ['tag',
       'my-project',
       '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA']
+# Push the container image to Container Registry
+  - name: 'docker'
+    args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA']
 # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
