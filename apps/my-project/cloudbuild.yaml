@@ -1,3 +1,13 @@
 steps:
   - name: docker
-    args: ['compose', 'up']
+    args: ['compose', '-f', 'apps/my-project/docker-compose.yml', 'build']
+  - name: 'docker'
+    args: ['tag',
+      'my-project',
+      '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA']
+# Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: ['run', 'deploy', 'monorepo-my-project', '--image', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA', '--region', '$LOCATION']
+images:
+  - '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA'

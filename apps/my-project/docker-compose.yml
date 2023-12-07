@@ -1,0 +1,6 @@
+services:
+  my-project:
+    build:
+      context: ../../
+      dockerfile: ./apps/my-project/Dockerfile
+    image: 'my-project'
