@@ -3,7 +3,7 @@ FROM node:18
 # Create app directory
 WORKDIR /usr/src/app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# A wildcard is used to ensure both package.json AND package-lock.json are copied. Copy the package.json from root
 COPY ../../package*.json ./
 
 # Install app dependencies
