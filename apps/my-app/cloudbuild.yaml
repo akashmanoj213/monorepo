@@ -2,7 +2,7 @@ steps:
   # - name: docker
   #   args: ['compose', '-f', 'apps/my-app/docker-compose.yml', 'build']
   - name: docker
-    args: ['build', '-f', 'apps/my-app/Dockerfile', '-t', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']
+    args: ['build', '-t', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA', './apps/my-app/Dockerfile']
   # - name: 'docker'
   #   args: ['tag',
   #     'my-app',
