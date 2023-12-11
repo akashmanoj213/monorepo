@@ -1,16 +1,18 @@
 steps:
+  # - name: docker
+  #   args: ['compose', '-f', 'apps/my-app/docker-compose.yml', 'build']
   - name: docker
-    args: ['compose', '-f', 'apps/my-app/docker-compose.yml', 'build']
-  - name: 'docker'
-    args: ['tag',
-      'my-app',
-      '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']
+    args: ['build', '-f', 'apps/my-app/Dockerfile', '-t', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']
+  # - name: 'docker'
+  #   args: ['tag',
+  #     'my-app',
+  #     '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']
 # Push the container image to Container Registry
   - name: 'docker'
     args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']
 # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    args: ['run', 'deploy', 'monorepo-my-app', '--image', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA', '--region', '$LOCATION']
+    args: ['run', 'deploy', 'monorepo-my-app', '--image', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA', '--region', '$LOCATION', '--allow-unauthenticated']
 images:
   - '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA'
