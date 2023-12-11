@@ -1,16 +1,18 @@
 steps:
+# Docker-compose build the image. Docker-compose file specifies root context to be able to copy common package.json file.
   - name: docker
     args: ['compose', '-f', 'apps/my-project/docker-compose.yml', 'build']
+# Tag the image with a unique name
   - name: 'docker'
     args: ['tag',
       'my-project',
       '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA']
-# Push the container image to Container Registry
+# Push the container image to Container Registry (Make sure to create a Registry for sahi)
   - name: 'docker'
     args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA']
 # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    args: ['run', 'deploy', 'monorepo-my-project', '--image', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA', '--region', '$LOCATION']
+    args: ['run', 'deploy', 'monorepo-my-project', '--image', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA', '--region', '$LOCATION', '--allow-unauthenticated']
 images:
   - '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-project:$COMMIT_SHA'

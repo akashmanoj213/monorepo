@@ -1,12 +1,12 @@
 steps:
-  # - name: docker
-  #   args: ['compose', '-f', 'apps/my-app/docker-compose.yml', 'build']
+# Docker-compose build the image. Docker-compose file specifies root context to be able to copy common package.json file.
   - name: docker
-    args: ['build', '-t', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA', '.']
-  # - name: 'docker'
-  #   args: ['tag',
-  #     'my-app',
-  #     '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']
+    args: ['compose', '-f', 'apps/my-app/docker-compose.yml', 'build']
+# Tag the image with a unique name
+  - name: 'docker'
+    args: ['tag',
+      'my-app',
+      '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']
 # Push the container image to Container Registry
   - name: 'docker'
     args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/sahi/my-app:$COMMIT_SHA']

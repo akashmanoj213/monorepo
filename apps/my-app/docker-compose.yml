@@ -1,6 +1,6 @@
-# services:
-#   my-app:
-#     build:
-#       context: ../../
-#       dockerfile: ./apps/my-app/Dockerfile
-#     image: 'my-app'
+services:
+  my-app:
+    build:
+      context: ../../
+      dockerfile: ./apps/my-app/Dockerfile
+    image: 'my-app'
